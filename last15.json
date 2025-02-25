@@ -1,0 +1,227 @@
+[
+  {
+    "timestamp": "Tue Feb 25 13:54:11 2025",
+    "bytes_sent": 2048,
+    "bytes_recv": 1024,
+    "throughput_sent": 2730.6666666666665,
+    "throughput_recv": 1365.3333333333333,
+    "external_ping": {
+      "packet_loss": 0.0,
+      "avg_latency": 21.381
+    },
+    "local_ping": {
+      "packet_loss": 0.0,
+      "avg_latency": 3.056
+    }
+  },
+  {
+    "timestamp": "Tue Feb 25 13:54:18 2025",
+    "bytes_sent": 2048,
+    "bytes_recv": 2048,
+    "throughput_sent": 2730.6666666666665,
+    "throughput_recv": 2730.6666666666665,
+    "external_ping": {
+      "packet_loss": 0.0,
+      "avg_latency": 22.722
+    },
+    "local_ping": {
+      "packet_loss": 0.0,
+      "avg_latency": 4.167
+    }
+  },
+  {
+    "timestamp": "Tue Feb 25 13:54:24 2025",
+    "bytes_sent": 6144,
+    "bytes_recv": 8192,
+    "throughput_sent": 8192.0,
+    "throughput_recv": 10922.666666666666,
+    "external_ping": {
+      "packet_loss": 0.0,
+      "avg_latency": 169.94
+    },
+    "local_ping": {
+      "packet_loss": 0.0,
+      "avg_latency": 303.38
+    }
+  },
+  {
+    "timestamp": "Tue Feb 25 13:54:34 2025",
+    "bytes_sent": 24576,
+    "bytes_recv": 24576,
+    "throughput_sent": 32768.0,
+    "throughput_recv": 32768.0,
+    "external_ping": {
+      "packet_loss": 0.0,
+      "avg_latency": 321.309
+    },
+    "local_ping": {
+      "packet_loss": 0.0,
+      "avg_latency": 304.214
+    }
+  },
+  {
+    "timestamp": "Tue Feb 25 13:54:44 2025",
+    "bytes_sent": 22528,
+    "bytes_recv": 26624,
+    "throughput_sent": 30037.333333333332,
+    "throughput_recv": 35498.666666666664,
+    "external_ping": {
+      "packet_loss": 0.0,
+      "avg_latency": 319.992
+    },
+    "local_ping": {
+      "packet_loss": 0.0,
+      "avg_latency": 304.446
+    }
+  },
+  {
+    "timestamp": "Tue Feb 25 13:54:55 2025",
+    "bytes_sent": 16384,
+    "bytes_recv": 17408,
+    "throughput_sent": 21845.333333333332,
+    "throughput_recv": 23210.666666666668,
+    "external_ping": {
+      "packet_loss": 0.0,
+      "avg_latency": 318.79
+    },
+    "local_ping": {
+      "packet_loss": 0.0,
+      "avg_latency": 304.928
+    }
+  },
+  {
+    "timestamp": "Tue Feb 25 13:55:06 2025",
+    "bytes_sent": 9216,
+    "bytes_recv": 12288,
+    "throughput_sent": 12288.0,
+    "throughput_recv": 16384.0,
+    "external_ping": {
+      "packet_loss": 0.0,
+      "avg_latency": 322.185
+    },
+    "local_ping": {
+      "packet_loss": 0.0,
+      "avg_latency": 303.72
+    }
+  },
+  {
+    "timestamp": "Tue Feb 25 13:55:17 2025",
+    "bytes_sent": 36864,
+    "bytes_recv": 21504,
+    "throughput_sent": 49152.0,
+    "throughput_recv": 28672.0,
+    "external_ping": {
+      "packet_loss": 0.0,
+      "avg_latency": 319.881
+    },
+    "local_ping": {
+      "packet_loss": 0.0,
+      "avg_latency": 306.454
+    }
+  },
+  {
+    "timestamp": "Tue Feb 25 13:55:28 2025",
+    "bytes_sent": 4096,
+    "bytes_recv": 5120,
+    "throughput_sent": 5461.333333333333,
+    "throughput_recv": 6826.666666666667,
+    "external_ping": {
+      "packet_loss": 0.0,
+      "avg_latency": 320.469
+    },
+    "local_ping": {
+      "packet_loss": 0.0,
+      "avg_latency": 304.325
+    }
+  },
+  {
+    "timestamp": "Tue Feb 25 13:55:39 2025",
+    "bytes_sent": 45056,
+    "bytes_recv": 40960,
+    "throughput_sent": 60074.666666666664,
+    "throughput_recv": 54613.333333333336,
+    "external_ping": {
+      "packet_loss": 0.0,
+      "avg_latency": 319.895
+    },
+    "local_ping": {
+      "packet_loss": 0.0,
+      "avg_latency": 304.892
+    }
+  },
+  {
+    "timestamp": "Tue Feb 25 13:55:49 2025",
+    "bytes_sent": 11264,
+    "bytes_recv": 17408,
+    "throughput_sent": 15018.666666666666,
+    "throughput_recv": 23210.666666666668,
+    "external_ping": {
+      "packet_loss": 0.0,
+      "avg_latency": 320.388
+    },
+    "local_ping": {
+      "packet_loss": 0.0,
+      "avg_latency": 302.915
+    }
+  },
+  {
+    "timestamp": "Tue Feb 25 13:56:00 2025",
+    "bytes_sent": 4096,
+    "bytes_recv": 4096,
+    "throughput_sent": 5461.333333333333,
+    "throughput_recv": 5461.333333333333,
+    "external_ping": {
+      "packet_loss": 0.0,
+      "avg_latency": 320.502
+    },
+    "local_ping": {
+      "packet_loss": 0.0,
+      "avg_latency": 303.821
+    }
+  },
+  {
+    "timestamp": "Tue Feb 25 13:56:11 2025",
+    "bytes_sent": 8192,
+    "bytes_recv": 11264,
+    "throughput_sent": 10922.666666666666,
+    "throughput_recv": 15018.666666666666,
+    "external_ping": {
+      "packet_loss": 0.0,
+      "avg_latency": 321.739
+    },
+    "local_ping": {
+      "packet_loss": 0.0,
+      "avg_latency": 303.831
+    }
+  },
+  {
+    "timestamp": "Tue Feb 25 13:56:20 2025",
+    "bytes_sent": 15360,
+    "bytes_recv": 17408,
+    "throughput_sent": 20480.0,
+    "throughput_recv": 23210.666666666668,
+    "external_ping": {
+      "packet_loss": 0.0,
+      "avg_latency": 320.69
+    },
+    "local_ping": {
+      "packet_loss": 0.0,
+      "avg_latency": 303.371
+    }
+  },
+  {
+    "timestamp": "Tue Feb 25 13:56:29 2025",
+    "bytes_sent": 39936,
+    "bytes_recv": 52224,
+    "throughput_sent": 53248.0,
+    "throughput_recv": 69632.0,
+    "external_ping": {
+      "packet_loss": 0.0,
+      "avg_latency": 320.504
+    },
+    "local_ping": {
+      "packet_loss": 0.0,
+      "avg_latency": 302.798
+    }
+  }
+]

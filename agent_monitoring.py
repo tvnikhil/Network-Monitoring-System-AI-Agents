@@ -1,0 +1,36 @@
+from pydantic_ai import Agent, RunContext
+from pydantic_ai.models.gemini import GeminiModel
+from data_collection import collect_data_func
+from attack_detection import detect_attack_func
+from common_classes import *
+
+sys_intsr = (
+    "You are a network monitoring agent. "
+    "First, you will collect data from a network interface for a specified duration using the collect_data tool. "
+    "Then, you analyze the network data to detect DDoS attacks using the detect_attack tool and report your findings."
+)
+
+model = GeminiModel(model_name='gemini-2.0-flash', api_key="AIzaSyAY2grODd5AkIynpMavWrjjHolufxKIj5M")
+
+monitoring_agent = Agent(
+    model=model,
+    system_prompt=sys_intsr,
+    model_settings={'temperature': 0.5},
+    result_retries=3,
+    retries=3,
+    result_type=AnalysisResult
+)
+
+@monitoring_agent.tool
+def detect_attack(ctx: RunContext[MyDeps]) -> AttackDetectionResult:
+    print(f"Detecting attack in {ctx.deps.pathToFile}...")
+    output = detect_attack_func(ctx.deps.pathToFile)
+    if output is None:
+        output = "Error: No output from detection function."
+    return AttackDetectionResult(op=output)
+
+@monitoring_agent.tool
+def collect_data(ctx: RunContext[MyDeps]) -> str:
+    print(f"Collect_data called: Capturing data for {ctx.deps.duration} seconds...")
+    collect_data_func(ctx.deps.duration)
+    return f"Data capture complete. PCAP stored at '{ctx.deps.pathToFile}/capture.pcap'."
