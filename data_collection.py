@@ -4,7 +4,7 @@ import os
 # Define your network interface and capture settings
 INTERFACE = "en0"  # Replace with your actual interface name
 # OUTPUT_DIR = os.path.join("lucid-ddos", "my-pcap-files")
-OUTPUT_FILE = "capture.pcap"
+OUTPUT_FILE = "lastCapture/capture.pcap"
 
 def collect_data_func(duration):
     

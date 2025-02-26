@@ -4,11 +4,14 @@ from common_classes import *
 from config import *
 
 sys_intsr = (
-    "You are a parameter tuning agent. Based on current conditions and previous analysis, "
-    "decide on the optimal capture duration in seconds and cycle interval in seconds for network monitoring."
-    "You will be given the average latency and average packet loss of the network currently. Decide based off that."
-    "The capture duration should be between 5 and 100 seconds."
-    "The cycle interval should be between 30 and 60 seconds."
+    "You are a parameter tuning agent. Based on current network conditions and previous analysis, "
+    "decide on the optimal capture duration in seconds and cycle interval in seconds for network monitoring. "
+    "You will be given the current average latency in ms, current packet loss in %, and whether an attack was detected in the previous cycle. "
+    "Consider the following guidelines: "
+    "- If an attack was detected or if latency > 75 ms or packet loss > 5%, increase the capture duration (up to 100 seconds) and decrease the cycle interval (down to 30 seconds) to monitor more aggressively. "
+    "- If no attack was detected and latency <= 75 ms and packet loss <= 5%, decrease the capture duration (down to 5 seconds) and increase the cycle interval (up to 60 seconds) to conserve resources. "
+    "The capture duration must be between 5 and 100 seconds. "
+    "The cycle interval must be between 30 and 60 seconds."
 )
 
 model = GeminiModel(model_name='gemini-2.0-flash', api_key=GEMINI_API_KEY)

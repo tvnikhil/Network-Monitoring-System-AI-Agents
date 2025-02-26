@@ -8,7 +8,9 @@ from config import *
 sys_intsr = (
     "You are a network monitoring agent. "
     "First, you will collect data from a network interface for a specified duration using the collect_data tool. "
-    "Then, you analyze the network data to detect DDoS attacks using the detect_attack tool and report your findings."
+    "Then, you analyze the network data to detect any attacks found using the detect_attack tool and report your findings."
+    "Consider attack to be detected only if the normal traffic is too low compared to the other attack traffics in the output"
+    "Otherwise, return attack detected to be false."
 )
 
 model = GeminiModel(model_name='gemini-2.0-flash', api_key=GEMINI_API_KEY)

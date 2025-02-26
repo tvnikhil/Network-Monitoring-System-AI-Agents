@@ -43,7 +43,7 @@ def get_ping_metrics(host, count=4, timeout=4):
     except subprocess.CalledProcessError:
         return {"packet_loss": None, "avg_latency": None}
 
-def monitor_network_performance(interval=1, duration=60, log_file="network_log.txt", external_host="8.8.8.8", ping_count=4):
+def monitor_network_performance(interval=1, duration=60, log_file="lastCapture/network_log.txt", external_host="8.8.8.8", ping_count=4):
     sliding_window = deque(maxlen=15)
     io_old = psutil.net_io_counters()
     start_time = time.time()
@@ -86,7 +86,7 @@ def monitor_network_performance(interval=1, duration=60, log_file="network_log.t
             
             sliding_window.append(data_point)
             
-            with open("last15.json", "w") as outfile:
+            with open("lastCapture/last15.json", "w") as outfile:
                 json.dump(list(sliding_window), outfile, indent=2)
             
             log_line = (
@@ -128,7 +128,7 @@ if __name__ == "__main__":
     monitor_network_performance(
         interval=0.75,
         duration=150,
-        log_file="network_log.txt",
+        log_file="lastCapture/network_log.txt",
         external_host="8.8.8.8",   # External connectivity test
         ping_count=4
     )

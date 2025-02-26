@@ -98,6 +98,6 @@ class PcapClassifier:
 # # Example usage when running this module directly
 if __name__ == '__main__':
     classifier = PcapClassifier()
-    results = classifier.classify_pcap("capture.pcap", filter=b"HTTP")
+    results = classifier.classify_pcap("lastCapture/capture.pcap", filter=b"HTTP")
     print("Predictions:", results)
     # classifier.plot_predictions(results)
