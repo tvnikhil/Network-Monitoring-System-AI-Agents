@@ -2,8 +2,7 @@ import torch
 from scapy.all import PcapReader, IP, TCP
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 import matplotlib.pyplot as plt
-
-HF_TOKEN = "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"
+from config import *
 
 class PcapClassifier:
     def __init__(self, model_name="rdpahalavan/bert-network-packet-flow-header-payload"):

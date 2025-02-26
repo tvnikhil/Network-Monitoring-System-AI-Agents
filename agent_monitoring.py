@@ -3,6 +3,7 @@ from pydantic_ai.models.gemini import GeminiModel
 from data_collection import collect_data_func
 from attack_detection import detect_attack_func
 from common_classes import *
+from config import *
 
 sys_intsr = (
     "You are a network monitoring agent. "
@@ -10,7 +11,7 @@ sys_intsr = (
     "Then, you analyze the network data to detect DDoS attacks using the detect_attack tool and report your findings."
 )
 
-model = GeminiModel(model_name='gemini-2.0-flash', api_key="AIzaSyAY2grODd5AkIynpMavWrjjHolufxKIj5M")
+model = GeminiModel(model_name='gemini-2.0-flash', api_key=GEMINI_API_KEY)
 
 monitoring_agent = Agent(
     model=model,

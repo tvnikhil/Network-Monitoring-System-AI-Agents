@@ -1,6 +1,7 @@
 from pydantic_ai import Agent
 from pydantic_ai.models.gemini import GeminiModel
 from common_classes import *
+from config import *
 
 sys_intsr = (
     "You are a parameter tuning agent. Based on current conditions and previous analysis, "
@@ -10,7 +11,7 @@ sys_intsr = (
     "The cycle interval should be between 30 and 60 seconds."
 )
 
-model = GeminiModel(model_name='gemini-2.0-flash', api_key="AIzaSyAY2grODd5AkIynpMavWrjjHolufxKIj5M")
+model = GeminiModel(model_name='gemini-2.0-flash', api_key=GEMINI_API_KEY)
 
 parameter_tuning_agent = Agent(
     model=model,
