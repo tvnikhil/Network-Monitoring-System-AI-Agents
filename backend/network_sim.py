@@ -2,18 +2,7 @@ import subprocess
 import sys
 import os
 
-def enable_dummynet(delay='100ms', loss=0.1):
-    """
-    Enable dummynet on macOS to simulate network conditions.
-    This function:
-      - Enables the packet filter.
-      - Configures a dummynet pipe (pipe 1) with the given delay and packet loss rate.
-      - Writes a temporary pf configuration to route all traffic through the pipe.
-    
-    Parameters:
-      delay (str): Delay to add to packets (e.g., '100ms').
-      loss (float): Packet loss rate (0.1 means 10% loss).
-    """
+def enable_dummynet(delay='150ms', loss=0.1):
     try:
         print("Enabling packet filter (pfctl)...")
         subprocess.run(["sudo", "pfctl", "-E"], check=True)
@@ -35,13 +24,8 @@ def enable_dummynet(delay='100ms', loss=0.1):
         sys.exit(1)
 
 def disable_dummynet():
-    """
-    Disable the dummynet simulation and restore normal network conditions.
-    This flushes the pf configuration and dummynet settings.
-    """
     try:
         print("Restoring original pf configuration...")
-        # Restore the system's default pf configuration.
         subprocess.run(["sudo", "pfctl", "-F", "all", "-f", "/etc/pf.conf"], check=True)
         print("Flushing dummynet pipes...")
         subprocess.run(["sudo", "dnctl", "-q", "flush"], check=True)
@@ -61,7 +45,6 @@ if __name__ == '__main__':
     
     command = sys.argv[1].lower()
     if command == "enable":
-        # Optional parameters for delay and loss.
         delay = sys.argv[2] if len(sys.argv) > 2 else "100ms"
         loss = sys.argv[3] if len(sys.argv) > 3 else 0.1
         try:

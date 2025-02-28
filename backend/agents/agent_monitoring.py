@@ -1,7 +1,8 @@
 from pydantic_ai import Agent, RunContext
 from pydantic_ai.models.gemini import GeminiModel
-from data_collection import collect_data_func
-from attack_detection import detect_attack_func
+
+from tools.data_collection import collect_data_func
+from tools.attack_detection import detect_attack_func
 from common_classes import *
 from config import *
 

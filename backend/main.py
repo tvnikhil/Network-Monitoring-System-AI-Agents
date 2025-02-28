@@ -1,7 +1,7 @@
 import json
 import time
-from agent_monitoring import monitoring_agent
-from agent_parameter_tuning import parameter_tuning_agent
+from agents.agent_monitoring import monitoring_agent
+from agents.agent_parameter_tuning import parameter_tuning_agent
 from common_classes import MyDeps
 
 path_to_file = "lastCapture/capture.pcap"

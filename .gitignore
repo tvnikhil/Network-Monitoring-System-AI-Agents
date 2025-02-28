@@ -1,4 +1,12 @@
 .venv/
-config.py
+backend/config.py
 __pycache__/
+*.pyc
+*.pyo
+*.pyd
 lastCapture/
+
+.vscode/
+.idea/
+.DS_Store
+*.swp
