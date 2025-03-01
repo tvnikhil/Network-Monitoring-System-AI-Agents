@@ -1,5 +1,5 @@
 .venv/
-backend/config.py
+backend/secrets.py
 __pycache__/
 *.pyc
 *.pyo

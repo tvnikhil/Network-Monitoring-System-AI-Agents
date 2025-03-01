@@ -4,12 +4,11 @@ from pydantic_ai.models.gemini import GeminiModel
 from tools.data_collection import collect_data_func
 from tools.attack_detection import detect_attack_func
 from common_classes import *
-from config import *
+from secretKeys import *
 
 sys_intsr = (
     "You are a network monitoring agent. "
-    "First, you will collect data from a network interface for a specified duration using the collect_data tool. "
-    "Then, you analyze the network data to detect any attacks found using the detect_attack tool and report your findings."
+    "You have detect_attack tool to detect attacks from the pcap file path in deps and report your findings."
     "Consider attack to be detected only if the normal traffic is too low compared to the other attack traffics in the output"
     "Otherwise, return attack detected to be false."
 )
@@ -33,8 +32,8 @@ def detect_attack(ctx: RunContext[MyDeps]) -> AttackDetectionResult:
         output = "Error: No output from detection function."
     return AttackDetectionResult(op=output)
 
-@monitoring_agent.tool
-def collect_data(ctx: RunContext[MyDeps]) -> str:
-    print(f"Collect_data called: Capturing data for {ctx.deps.duration} seconds...")
-    collect_data_func(ctx.deps.duration)
-    return f"Data capture complete. PCAP stored at '{ctx.deps.pathToFile}/capture.pcap'."
+# @monitoring_agent.tool
+# def collect_data(ctx: RunContext[MyDeps]) -> str:
+#     print(f"Collect_data called: Capturing data for {ctx.deps.duration} seconds...")
+#     collect_data_func(ctx.deps.duration)
+#     return f"Data capture complete. PCAP stored at '{ctx.deps.pathToFile}/capture.pcap'."

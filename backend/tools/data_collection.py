@@ -1,4 +1,5 @@
 import subprocess
+import asyncio
 
 INTERFACE = "en0"
 OUTPUT_FILE = "lastCapture/capture.pcap"
@@ -11,6 +12,9 @@ def collect_data_func(duration):
         "-a", f"duration:{duration}",
         "-w", OUTPUT_FILE
     ]
-    print(f"Starting capture on {INTERFACE} for {duration} seconds...")
-    subprocess.run(cmd)
-    print(f"Capture complete. PCAP file saved as '{OUTPUT_FILE}'.")
+
+    # Capture data (blocking, run in thread)
+
+    # print(f"Starting capture on {INTERFACE} for {duration} seconds...")
+    # subprocess.run(cmd)
+    # print(f"Capture complete. PCAP file saved as '{OUTPUT_FILE}'.")
