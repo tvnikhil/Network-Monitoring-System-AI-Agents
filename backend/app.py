@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 import asyncio
 from network_monitor import NetworkMonitor
-from websocket import broadcaster, websocket_endpoint
+from backend.appWebsocket import broadcaster, websocket_endpoint
 
 monitor = NetworkMonitor()
 

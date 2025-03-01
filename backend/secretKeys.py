@@ -1,2 +1,0 @@
-GEMINI_API_KEY = "AIzaSyAY2grODd5AkIynpMavWrjjHolufxKIj5M"
-HF_TOKEN = "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"
