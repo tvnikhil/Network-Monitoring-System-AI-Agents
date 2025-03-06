@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 backend/venv/
 .venv/
 backend/secretKeys.py
@@ -35,3 +36,42 @@ frontend/.env.production.local
 frontend/npm-debug.log*
 frontend/yarn-debug.log*
 frontend/yarn-error.log*
+=======
+backend/venv/
+.venv/
+backend/secretKeys.py
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+lastCapture/
+
+.vscode/
+.idea/
+.DS_Store
+*.swp
+
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+frontend/node_modules/
+frontend/.pnp
+frontend/.pnp.js
+
+# testing
+frontend//coverage
+
+# production
+frontend//build
+
+# misc
+frontend/.DS_Store
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+>>>>>>> dbee9190b9d5c0983fbbc47908a9dd124c7479f9

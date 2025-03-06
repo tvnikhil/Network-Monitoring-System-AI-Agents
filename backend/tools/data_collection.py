@@ -1,7 +1,7 @@
 import subprocess
 import asyncio
 
-INTERFACE = "en0"
+INTERFACE = "Wi-Fi"  # Use your Wi-Fi interface name 
 OUTPUT_FILE = "lastCapture/capture.pcap"
 
 def collect_data_func(duration):

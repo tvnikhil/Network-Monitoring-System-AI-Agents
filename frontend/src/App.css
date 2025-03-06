@@ -1,35 +1,80 @@
 .app {
   padding: 20px;
   font-family: Arial, sans-serif;
-  max-width: 1200px;
-  margin: 0 auto;
+  background-color: #f5f5f5;
+  min-height: 100vh;
 }
 
 h1 {
   text-align: center;
+  color: #333;
   margin-bottom: 20px;
-  font-size: 24px;
+}
+
+.connection-status {
+  text-align: center;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.connection-status.connected {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.connection-status.disconnected,
+.connection-status.error {
+  background-color: #f8d7da;
+  color: #721c24;
 }
 
 .alert {
-  background-color: #ff4444;
-  color: white;
-  padding: 15px;
-  margin-bottom: 20px;
-  border-radius: 4px;
+  background-color: #ffcccc;
+  color: #cc0000;
+  padding: 10px;
   text-align: center;
-  font-size: 18px;
+  border-radius: 5px;
+  margin-bottom: 20px;
   font-weight: bold;
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.tabs button {
+  padding: 10px 20px;
+  margin: 0 5px;
+  border: none;
+  background-color: #f0f0f0;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.tabs button.active {
+  background-color: #3357FF;
+  color: white;
+}
+
+.tabs button:hover:not(.active) {
+  background-color: #e0e0e0;
 }
 
 .chart-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); /* Wider columns */
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   gap: 20px;
 }
 
 .chart-container {
-  background: #f9f9f9;
-  padding: 10px;
+  background-color: #fff;
+  padding: 15px;
   border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }

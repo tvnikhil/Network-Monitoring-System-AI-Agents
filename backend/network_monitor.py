@@ -10,8 +10,8 @@ from config import metrics_queue, attack_queue  # Existing queues for broadcasti
 from utils import get_ping_metrics, get_default_gateway  # Utility functions
 
 # Network interface for capture (adjust as needed)
-INTERFACE = "en0"
 
+INTERFACE = "Wi-Fi"  # Use your Wi-Fi interface name 
 # Performance Monitoring Agent
 class PerformanceMonitoringAgent:
     def __init__(self, metrics_queue, performance_to_tuning_queue, tuning_to_performance_queue, 
