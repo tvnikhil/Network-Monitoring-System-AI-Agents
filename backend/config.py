@@ -1,10 +1,9 @@
 import os
-from collections import deque
 import asyncio
 from common_classes import MyDeps
 from tools.data_collection import INTERFACE
 
-# Environment setup
+# Environment configuration
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 # Global variables
@@ -12,7 +11,7 @@ connected_clients = set()
 metrics_queue = asyncio.Queue()
 attack_queue = asyncio.Queue()
 
-# NetworkMonitor configuration
+# Network monitoring configuration
 DEFAULT_DEPS = MyDeps(
     pathToFile="lastCapture/capture.pcap",
     duration=18,
