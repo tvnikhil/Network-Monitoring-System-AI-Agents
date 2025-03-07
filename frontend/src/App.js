@@ -16,6 +16,13 @@ const metricBins = {
   // External Packet Loss is handled separately (0% vs >0%)
 };
 
+// Define thresholds for metrics
+const thresholds = {
+  'External Latency': { avg: 75, max: 100 },      // ms
+  'Local Latency': { avg: 75, max: 100 },         // ms
+  'External Packet Loss': { avg: 0.05, max: 0.10 } // 5% and 10%
+};
+
 const App = () => {
   // State for metrics data
   const [metricsData, setMetricsData] = useState({
@@ -43,7 +50,7 @@ const App = () => {
   // Ref for retry count
   const retryCountRef = useRef(0);
 
-  // WebSocket connection function
+  // WebSocket connection function with re-establishment
   const connectWebSocket = () => {
     const ws = new WebSocket('ws://localhost:8000/ws'); // Adjust URL as needed
     wsRef.current = ws;
@@ -129,60 +136,123 @@ const App = () => {
     }));
   };
 
-  // Get pie chart data
+  // Get pie chart data and check threshold exceedance
   const getPieChartData = (metricName, data) => {
-    if (data.length === 0) return { series: [], labels: [] };
+    if (data.length === 0) return { series: [], labels: [], exceeded: false };
     if (metricName === 'External Packet Loss') {
       const noLoss = data.filter(d => d.y === 0).length;
       const loss = data.length - noLoss;
+      const latestValue = data[data.length - 1]?.y || 0;
+      const threshold = thresholds[metricName];
+      const exceeded = threshold && (latestValue > threshold.avg || latestValue > threshold.max);
       return {
         series: [noLoss / data.length * 100, loss / data.length * 100],
         labels: ['No Loss', 'Loss'],
+        exceeded,
       };
     } else {
-      const bins = metricBins[metricName];
-      if (!bins || bins.length !== 2) return { series: [], labels: [] };
+      const bins = metricBins[metricName] || [100, 500]; // Default bins if not defined
       const low = data.filter(d => d.y < bins[0]).length;
       const medium = data.filter(d => d.y >= bins[0] && d.y < bins[1]).length;
       const high = data.filter(d => d.y >= bins[1]).length;
       const total = data.length;
+      const latestValue = data[data.length - 1]?.y || 0;
+      const threshold = thresholds[metricName];
+      const exceeded = threshold && (latestValue > threshold.avg || latestValue > threshold.max);
       return {
         series: [low / total * 100, medium / total * 100, high / total * 100],
         labels: [`Low (<${bins[0]})`, `Medium (${bins[0]}-${bins[1]})`, `High (>${bins[1]})`],
+        exceeded,
       };
     }
   };
 
-  // Chart options
-  const lineChartOptions = (title, yAxisLabel, color) => ({
-    chart: { type: 'line', height: 300, animations: { enabled: true, easing: 'linear' } },
-    xaxis: { type: 'datetime', labels: { style: { fontSize: '14px' } } },
-    yaxis: {
-      title: { text: yAxisLabel },
-      labels: {
-        style: { fontSize: '14px' },
-        formatter: (value) => (title === 'External Packet Loss' ? `${(value * 100).toFixed(2)}%` : value.toFixed(2)),
+  // Chart options with threshold lines
+  const lineChartOptions = (title, yAxisLabel, color, threshold) => {
+    const options = {
+      chart: { type: 'line', height: 300, animations: { enabled: true, easing: 'linear' } },
+      xaxis: { type: 'datetime', labels: { style: { fontSize: '14px' } } },
+      yaxis: {
+        title: { text: yAxisLabel },
+        labels: {
+          style: { fontSize: '14px' },
+          formatter: (value) => (title === 'External Packet Loss' ? `${(value * 100).toFixed(2)}%` : value.toFixed(2)),
+        },
+        ...(title === 'External Packet Loss' ? { min: 0, max: 1 } : {}),
       },
-      ...(title === 'External Packet Loss' ? { min: 0, max: 1 } : {}),
-    },
-    title: { text: title, align: 'center', style: { fontSize: '18px', fontWeight: 'bold' } },
-    stroke: { width: 2, curve: 'smooth' },
-    colors: [color],
-    tooltip: { x: { format: 'HH:mm:ss' } },
-  });
+      title: { text: title, align: 'center', style: { fontSize: '18px', fontWeight: 'bold' } },
+      stroke: { width: 2, curve: 'smooth' },
+      colors: [color],
+      tooltip: { x: { format: 'HH:mm:ss' } },
+    };
+    if (threshold) {
+      const isPacketLoss = title === 'External Packet Loss';
+      options.annotations = {
+        yaxis: [
+          {
+            y: threshold.avg,
+            borderColor: '#FF0000',
+            label: {
+              borderColor: '#FF0000',
+              style: { color: '#fff', background: '#FF0000' },
+              text: `Avg Threshold: ${isPacketLoss ? (threshold.avg * 100).toFixed(0) + '%' : threshold.avg + ' ' + yAxisLabel}`,
+            },
+          },
+          {
+            y: threshold.max,
+            borderColor: '#FF00FF',
+            label: {
+              borderColor: '#FF00FF',
+              style: { color: '#fff', background: '#FF00FF' },
+              text: `Max Threshold: ${isPacketLoss ? (threshold.max * 100).toFixed(0) + '%' : threshold.max + ' ' + yAxisLabel}`,
+            },
+          },
+        ],
+      };
+    }
+    return options;
+  };
 
-  const barChartOptions = (title, yAxisLabel) => ({
-    chart: { type: 'bar', height: 300 },
-    xaxis: { type: 'datetime', labels: { style: { fontSize: '14px' } } },
-    yaxis: {
-      title: { text: yAxisLabel },
-      labels: { style: { fontSize: '14px' } },
-    },
-    title: { text: title, align: 'center', style: { fontSize: '18px', fontWeight: 'bold' } },
-    plotOptions: { bar: { horizontal: false } },
-    colors: [colors[0]],
-    tooltip: { x: { format: 'HH:mm:ss' } },
-  });
+  const barChartOptions = (title, yAxisLabel, threshold) => {
+    const options = {
+      chart: { type: 'bar', height: 300 },
+      xaxis: { type: 'datetime', labels: { style: { fontSize: '14px' } } },
+      yaxis: {
+        title: { text: yAxisLabel },
+        labels: { style: { fontSize: '14px' } },
+      },
+      title: { text: title, align: 'center', style: { fontSize: '18px', fontWeight: 'bold' } },
+      plotOptions: { bar: { horizontal: false } },
+      colors: [colors[0]],
+      tooltip: { x: { format: 'HH:mm:ss' } },
+    };
+    if (threshold) {
+      const isPacketLoss = title.includes('Packet Loss');
+      options.annotations = {
+        yaxis: [
+          {
+            y: threshold.avg,
+            borderColor: '#FF0000',
+            label: {
+              borderColor: '#FF0000',
+              style: { color: '#fff', background: '#FF0000' },
+              text: `Avg Threshold: ${isPacketLoss ? (threshold.avg * 100).toFixed(0) + '%' : threshold.avg + ' ' + yAxisLabel}`,
+            },
+          },
+          {
+            y: threshold.max,
+            borderColor: '#FF00FF',
+            label: {
+              borderColor: '#FF00FF',
+              style: { color: '#fff', background: '#FF00FF' },
+              text: `Max Threshold: ${isPacketLoss ? (threshold.max * 100).toFixed(0) + '%' : threshold.max + ' ' + yAxisLabel}`,
+            },
+          },
+        ],
+      };
+    }
+    return options;
+  };
 
   const pieChartOptions = (title, labels) => ({
     chart: { type: 'pie', height: 300 },
@@ -211,42 +281,53 @@ const App = () => {
       </div>
       <div className="chart-grid">
         {activeTab === 'line' &&
-          metrics.map((metric, index) => (
-            <div key={index} className="chart-container">
-              <ApexCharts
-                options={lineChartOptions(metric.name, metric.unit, colors[index % colors.length])}
-                series={[{ name: metric.name, data: metric.data }]}
-                type="line"
-                height={300}
-              />
-            </div>
-          ))}
+          metrics.map((metric, index) => {
+            const threshold = thresholds[metric.name];
+            const latestValue = metric.data.length > 0 ? metric.data[metric.data.length - 1].y : null;
+            const exceeded = threshold && latestValue !== null && (latestValue > threshold.avg || latestValue > threshold.max);
+            return (
+              <div key={index} className={`chart-container ${exceeded ? 'exceeded-threshold' : ''}`}>
+                <ApexCharts
+                  options={lineChartOptions(metric.name, metric.unit, colors[index % colors.length], threshold)}
+                  series={[{ name: metric.name, data: metric.data }]}
+                  type="line"
+                  height={300}
+                />
+                {exceeded && <div className="threshold-alert">Threshold exceeded!</div>}
+              </div>
+            );
+          })}
         {activeTab === 'bar' &&
           metrics.map((metric, index) => {
             const aggregatedData = aggregateData(metric.data);
+            const threshold = thresholds[metric.name];
+            const latestBarValue = aggregatedData.length > 0 ? aggregatedData[aggregatedData.length - 1].y : null;
+            const exceeded = threshold && latestBarValue !== null && (latestBarValue > threshold.avg || latestBarValue > threshold.max);
             return (
-              <div key={index} className="chart-container">
+              <div key={index} className={`chart-container ${exceeded ? 'exceeded-threshold' : ''}`}>
                 <ApexCharts
-                  options={barChartOptions(`Average ${metric.name} per 5-min`, metric.unit)}
+                  options={barChartOptions(`Average ${metric.name} per 5-min`, metric.unit, threshold)}
                   series={[{ name: metric.name, data: aggregatedData }]}
                   type="bar"
                   height={300}
                 />
+                {exceeded && <div className="threshold-alert">Threshold exceeded!</div>}
               </div>
             );
           })}
         {activeTab === 'pie' &&
           metrics.map((metric, index) => {
-            const { series, labels } = getPieChartData(metric.name, metric.data);
+            const { series, labels, exceeded } = getPieChartData(metric.name, metric.data);
             if (series.length === 0) return null;
             return (
-              <div key={index} className="chart-container">
+              <div key={index} className={`chart-container ${exceeded ? 'exceeded-threshold' : ''}`}>
                 <ApexCharts
                   options={pieChartOptions(`${metric.name} Distribution`, labels)}
                   series={series}
                   type="pie"
                   height={300}
                 />
+                {exceeded && <div className="threshold-alert">Threshold exceeded!</div>}
               </div>
             );
           })}

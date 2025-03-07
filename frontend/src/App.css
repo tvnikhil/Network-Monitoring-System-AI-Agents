@@ -78,3 +78,17 @@ h1 {
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
+
+.exceeded-threshold {
+  background-color: #ffcccc;
+}
+
+.threshold-alert {
+  background-color: #ffcccc;
+  color: #cc0000;
+  padding: 10px;
+  text-align: center;
+  border-radius: 5px;
+  margin-top: 10px;
+  font-weight: bold;
+}
